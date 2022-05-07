@@ -34,15 +34,10 @@
  *   - All parameters can be persistent changed online using commands via MQTT, WebConsole or Serial.
 \*****************************************************************************************************/
 
-// platformio run -e tasmota
+// platformio run -e tasmota or just platformio run
+
 // !!! Remember that your changes GOES AT THE BOTTOM OF THIS FILE right before the last #endif !!! 
 // sample file from the live stream of compiling via gitpod https://youtu.be/9Am5hf7eHho
-
-// force the compiler to show a warning to confirm that this file is included
-#warning **** user_config_override.h: Using Settings from this File ****
-/*
- * platformio run
- */
 
 // force the compiler to show a warning to confirm that this file is included
 #warning **** user_config_override.h: Using Settings from this File ****
