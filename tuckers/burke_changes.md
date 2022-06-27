@@ -1,5 +1,5 @@
 
-Spotify desk application installation. Reference this: https://linuxhint.com/installing_spotify_linux_mint/
+### Spotify desk application installation. Reference this: https://linuxhint.com/installing_spotify_linux_mint/
 
 Not using snap but using deb.
 
@@ -21,4 +21,4 @@ Step 4.
   Confirmed with the following.
 spotify --version
 
--- Andrew 25 - June 2022
+**Andrew on 25th June 2022**
