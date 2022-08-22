@@ -1,0 +1,19 @@
+https://old.reddit.com/r/nodered/comments/alm6s2/anyone_using_node_red_to_trigger_volumio/
+https://techexplorations.com/guides/esp32/node-red-esp32-project/node-red-messages-variables/
+https://notenoughtech.com/nodered-home-automation/multiple-payloads/
+https://www.dudley.nu/projects/MQTT_and_NodeRed/
+https://groups.google.com/g/sonoffusers/c/hqwm-5yaa9c
+https://flows.nodered.org/flow/a4ddead2a9f502db14d3f7783093ff90
+//
+https://github.com/mdhom/node-red-contrib-google-oauth-calendar
+https://farmer-eds-shed.com/interacting-with-google-calendar-using-node-red/
+https://farmer-eds-shed.com/how-to-generate-google-api-oauth2-credentials/
+https://github.com/Farmer-Eds-Shed/Node-Red-Google-API-Flows
+//
+https://electronics.stackexchange.com/questions/571581/is-it-possible-to-control-a-latching-bistable-relay-with-a-single-mcu-pin
+https://www.freestompboxes.org/viewtopic.php?t=24589&sid=bc1f9eb3958080d4dfe888385d53b03b
+https://www.instructables.com/Latching-Relay-Module/
+https://www.codeproject.com/Articles/1105987/Build-a-Raspberry-Pi-powersupply-with-Digispark-At
+https://makersportal.com/blog/2019/9/21/attiny85-internet-of-things-bluetooth-arduino-board
+//
+Review and possibly modified on or about 2:12 pm Tuesday, 2 August 2022
