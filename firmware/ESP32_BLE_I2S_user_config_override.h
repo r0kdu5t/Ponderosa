@@ -34,6 +34,9 @@
  *   - All parameters can be persistent changed online using commands via MQTT, WebConsole or Serial.
 \*****************************************************************************************************/
 
+// force the compiler to show a warning to confirm that this file is included
+#warning **** user_config_override.h: Using Settings from this File ****
+
 /*********************************************************************************************\
  * 
  * Provide an image with BLE support and I2S
