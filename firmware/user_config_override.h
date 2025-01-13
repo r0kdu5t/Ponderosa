@@ -36,7 +36,7 @@
 #ifdef CODE_IMAGE_STR
   #undef CODE_IMAGE_STR
 #endif
-#define CODE_IMAGE_STR "Custom-13Sep24"
+#define CODE_IMAGE_STR "Custom"
 
 #ifdef MODULE
   #undef MODULE
