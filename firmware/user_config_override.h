@@ -102,7 +102,40 @@
     #endif
     #define CODE_IMAGE_STR "Custom-Wiegand"
 
-    // Put here your override for firmware tasmota-foo
+    // Put here your override for firmware tasmota-wie
+//#undef USE_CUSTOM                                // Disable Custom features
+#undef USE_DISCOVERY                             // Disable Discovery services for both MQTT and web server
+//#undef USE_TIMERS                                // Disable support for up to 16 timers
+#undef USE_TIMERS_WEB                            // Disable support for timer webpage
+//#undef USE_SUNRISE                               // Disable support for Sunrise and sunset tools
+#undef USE_SCRIPT                                  // Add support for script (+17k code)
+#undef ROTARY_V1                                 // Disable support for MI Desk Lamp
+#undef USE_SONOFF_SC
+#undef USE_RF_FLASH                              // Disable support for Sonoff Sc (+1k1 code)
+#undef USE_ARMTRONIX_DIMMERS                     // Disable support for Armtronix Dimmers (+1k4 code)
+#undef USE_PS_16_DZ                              // Disable support for PS-16-DZ Dimmer and Sonoff L1 (+2k code)
+#undef USE_ARILUX_RF                             // Disable support for Arilux RF remote controller
+#undef USE_SHUTTER                               // Disable Shutter support for up to 4 shutter with different motortypes (+6k code)
+#undef USE_DEEPSLEEP                             // Disable support for deepsleep (+1k code)
+#undef USE_EXS_DIMMER                            // Disable support for EX-Store WiFi Dimmer
+#undef USE_HOTPLUG                               // Disable support for HotPlug
+#undef USE_PWM_DIMMER_REMOTE                     // Disbale support for remote switches to PWM Dimmer
+#undef USE_KEELOQ                                // Disable support for Jarolift rollers by Keeloq algorithm (+4k5 code)
+#undef USE_SONOFF_D1                             // Disable support for Sonoff D1 Dimmer (+0k7 code)
+#undef USE_SHELLY_DIMMER                         // Disable support for Shelly Dimmer (+3k code)
+#undef USE_ENERGY_SENSOR                         // Disable energy sensors (-14k code)
+
+#define USE_DISPLAY
+#define USE_I2C                                  // I2C using library wire (+10k code, 0k2 mem, 124 iram)
+  #define USE_DISPLAY_MODES1TO5                  // Enable display mode 1 to 5 in addition to mode 0
+  #define USE_DISPLAY_LCD                        // [DisplayModel 1] Enable Lcd display (I2C addresses 0x27 and 0x3F) (+6k code)
+  #define USE_DISPLAY_SSD1306                    // [DisplayModel 2] Enable SSD1306 Oled 128x64 display (I2C addresses 0x3C and 0x3D) (+16k code)
+  #undef USE_DISPLAY_MATRIX                     // [DisplayModel 3] Enable 8x8 Matrix display (I2C adresseses see below) (+11k code)
+  #undef USE_DISPLAY_SEVENSEG                   // [DisplayModel 11] [I2cDriver47] Enable sevenseg display (I2C addresses 0x70 - 0x77) (<+11k code)
+  #define USE_DISPLAY_SH1106                     // [DisplayModel 7] Enable SH1106 Oled 128x64 display (I2C addresses 0x3C and 0x3D)
+
+#undef USE_SPI
+
     #define USE_WIEGAND                              // Add support for 24/26/32/34 bit RFID Wiegand interface (D0/D1) (+1k7 code)
     //#define USE_I2C
 
