@@ -23,90 +23,35 @@
 // force the compiler to show a warning to confirm that this file is included
 #warning **** user_config_override.h: USING SETTINGS FROM THIS FILE ****
 
-/*********************************************************************************************\
- * 
- * An attempt to set up a build system to provide the necessary different versions that
- * I've been playing about with but using better techniques than multiple config files.
- *
-\*********************************************************************************************/
-
 // ***********************************************
 // ** Global settings for all binaries ***********
 
-#ifdef CODE_IMAGE_STR
-  #undef CODE_IMAGE_STR
+// -- Setup your own Wifi settings  ---------------
+#ifdef WIFI_SCAN_AT_RESTART
+  #undef WIFI_SCAN_AT_RESTART
 #endif
-#define CODE_IMAGE_STR "Custom"
+#define WIFI_SCAN_AT_RESTART true
 
-#ifdef MODULE
-  #undef MODULE
+#ifdef WIFI_SCAN_REGULARLY
+  #undef WIFI_SCAN_REGULARLY
 #endif
-#define MODULE WEMOS
+#define WIFI_SCAN_REGULARLY true
 
-#ifdef USE_HOME_ASSISTANT
-   #undef USE_HOME_ASSISTANT
-#endif
-
-#ifdef USE_TASMOTA_DISCOVERY
-   #undef USE_TASMOTA_DISCOVERY
-#endif
-
-#undef USE_ARDUINO_OTA
-#undef USE_DOMOTICZ                              // Disable Domoticz
-#undef USE_TELEGRAM
+// UNDEF stuff here that I don't want in my mix.
+//#undef USE_ARDUINO_OTA
+#undef USE_DOMOTICZ
+#undef USE_TELEGRAM                              // Disable Domoticz
 #undef USE_MQTT_TLS                              // Disable TLS support won't work as the MQTTHost is not set
-#undef USE_KNX 
-#undef USE_JAVASCRIPT_ES6 
+#undef USE_KNX
+#undef USE_JAVASCRIPT_ES6
 #undef USE_WEBSEND_RESPONSE                      // Disable command WebSend response message (+1k code)
 #undef USE_EMULATION                             // Disable Wemo or Hue emulation
 #undef USE_EMULATION_HUE                         // Disable Hue Bridge emulation for Alexa (+14k code, +2k mem common)
 #undef USE_EMULATION_WEMO                        // Disable Belkin WeMo emulation for Alexa (+6k code, +2k mem common)
-
-// ***********************************************
-// ** Firmware specific settings *****************
-
-/*
-    List the various different variants I've configured prevously.
-    *   TasmotaClient   - TAC
-    *   Wiegand         - WIE
-    *   Radar LD2410    - RAD
-    *   Tasmota32 I2S   - AUD
-    *
- */
-
-
-// -- Options for firmware tasmota-foo and tasmota32-foo ------
-#ifdef FIRMWARE_FOO
-    // This line will issue a warning during the build (yellow in 
-    // VSCode) so you see which section is used
-    #warning **** Build: FOO ****
-    // -- CODE_IMAGE_STR is the name shown between brackets on the 
-    //    Information page or in INFO MQTT messages
-    #undef CODE_IMAGE_STR
-    #define CODE_IMAGE_STR "foo"
-    
-    // Put here your override for firmware tasmota-foo
-    #define USE_I2C
-    #define USE_SENSOR_FOO  // Beware this doesn't exist !!!
-
-#endif
-// -- Options for firmware tasmota-wie and tasmota32-wie ------
-#ifdef FIRMWARE_WIE
-    // This line will issue a warning during the build (yellow in 
-    // VSCode) so you see which section is used
-    #warning **** Build: WIE - Wiegand ****
-    // -- CODE_IMAGE_STR is the name shown between brackets on the 
-    //    Information page or in INFO MQTT messages
-    #ifdef CODE_IMAGE_STR
-        #undef CODE_IMAGE_STR
-    #endif
-    #define CODE_IMAGE_STR "Custom-Wiegand"
-
-    // Put here your override for firmware tasmota-wie
 //#undef USE_CUSTOM                                // Disable Custom features
-#undef USE_DISCOVERY                             // Disable Discovery services for both MQTT and web server
+//#undef USE_DISCOVERY                             // Disable Discovery services for both MQTT and web server
 //#undef USE_TIMERS                                // Disable support for up to 16 timers
-#undef USE_TIMERS_WEB                            // Disable support for timer webpage
+//#undef USE_TIMERS_WEB                            // Disable support for timer webpage
 //#undef USE_SUNRISE                               // Disable support for Sunrise and sunset tools
 #undef USE_SCRIPT                                  // Add support for script (+17k code)
 #undef ROTARY_V1                                 // Disable support for MI Desk Lamp
@@ -125,49 +70,169 @@
 #undef USE_SHELLY_DIMMER                         // Disable support for Shelly Dimmer (+3k code)
 #undef USE_ENERGY_SENSOR                         // Disable energy sensors (-14k code)
 
-#define USE_DISPLAY
-#define USE_I2C                                  // I2C using library wire (+10k code, 0k2 mem, 124 iram)
-  #define USE_DISPLAY_MODES1TO5                  // Enable display mode 1 to 5 in addition to mode 0
-  #define USE_DISPLAY_LCD                        // [DisplayModel 1] Enable Lcd display (I2C addresses 0x27 and 0x3F) (+6k code)
-  #define USE_DISPLAY_SSD1306                    // [DisplayModel 2] Enable SSD1306 Oled 128x64 display (I2C addresses 0x3C and 0x3D) (+16k code)
-  #undef USE_DISPLAY_MATRIX                     // [DisplayModel 3] Enable 8x8 Matrix display (I2C adresseses see below) (+11k code)
-  #undef USE_DISPLAY_SEVENSEG                   // [DisplayModel 11] [I2cDriver47] Enable sevenseg display (I2C addresses 0x70 - 0x77) (<+11k code)
-  #define USE_DISPLAY_SH1106                     // [DisplayModel 7] Enable SH1106 Oled 128x64 display (I2C addresses 0x3C and 0x3D)
+// ***********************************************
+// ** Firmware specific settings *****************
 
-#undef USE_SPI
+// -- Options for firmware tasmota-wiegand and tasmota32-wiegand ------
+#ifdef FIRMWARE_WIEGAND
+    // This line will issue a warning during the build (yellow in 
+    // VSCode) so you see which section is used
+    #warning **** Build: WIEGAND ****
+    // -- CODE_IMAGE_STR is the name shown between brackets on the 
+    //    Information page or in INFO MQTT messages
+    #undef CODE_IMAGE_STR
+    #define CODE_IMAGE_STR "custom-wiegand"
 
-    #define USE_WIEGAND                              // Add support for 24/26/32/34 bit RFID Wiegand interface (D0/D1) (+1k7 code)
-    //#define USE_I2C
-
+    // Put here your override for firmware tasmota-foo
+    // -- No IR options ----------------------------
+    #ifdef USE_IR_REMOTE
+      #undef USE_IR_REMOTE                        // Enable IR remote commands using library IRremoteESP8266
+    #endif
+    #ifdef USE_IR_REMOTE_FULL
+      #undef USE_IR_REMOTE_FULL                   // Support all IR protocols from IRremoteESP8266
+    #endif
+    // -- Add Wiegand ---
+    #ifndef USE_WIEGAND                           // Add support for 24/26/32/34 bit RFID Wiegand interface (D0/D1) (+1k7 code)
+      #define USE_WIEGAND
+    #endif
 #endif
 
 // -- Options for firmware tasmota-bar ------
-#ifdef FIRMWARE_BAR
-    #warning **** Build: BAR ****
+#ifdef FIRMWARE_SMARTMETER
+    #warning **** Build: SMARTMETER ****
     #undef CODE_IMAGE_STR
-    #define CODE_IMAGE_STR "bar"
+    #define CODE_IMAGE_STR "custom-smartmeter"
 
-    // Put here your override for firmware tasmota-bar
+    // Put here your override for firmware custom-smartmeter
+    // Added the following as I only have a pulse led meter.
+    //#define NO_USE_SML_SPECOPT
+    //#define NO_USE_SML_DECRYPT
+    //#define NO_USE_SML_TCP
+    //#define NO_SML_OBIS_LINE
 
+    #ifndef USE_SCRIPT
+      #define USE_SCRIPT
+    #endif
+    #ifndef USE_SML_M
+      #define USE_SML_M
+      #define USE_SML_SCRIPT_CMD
+    #endif
+    #ifdef USE_RULES
+      #undef USE_RULES
+    #endif
 #endif
 
-// -- Options for firmware tasmota32-grizzly ------
-#ifdef FIRMWARE_GRIZZLY
+// -- Options for firmware tasmota32-i2saudio ------
+#ifdef FIRMWARE_I2SAUDIO
 
     // If these settings are only for ESP32, you can check these
     // are used only when building for ESP32
     #ifndef ESP32
-    #error *** This setup of for tasmota32 only ***
+      #error *** This setup is for tasmota32 only ***
     #endif
 
-    #warning **** Build: GRIZZLY ****
+    #warning **** Build: I2SAUDIO ****
     #undef CODE_IMAGE_STR
-    #define CODE_IMAGE_STR "grizzly"
+    #define CODE_IMAGE_STR "custom-I2S"
 
-    // Put here your override for firmware tasmota32-grizzly
-
+    // Put here your override for firmware custom-I2S
+    #ifndef USE_I2S_AUDIO
+    #define USE_I2S_AUDIO                             // Add support for I2S audio output
+    // #define USE_I2S_NO_DAC                         // Add support for transistor-based output without DAC
+    // #define USE_I2S_LSB                            // Add support for LSBJ chips, e.g. TM8211/PT8211
+    // #define USE_I2S_WEBRADIO                       // Add support for MP3 web radio streaming (only on ESP32 with PSRAM)
+    #define USE_I2S_SAY_TIME                       // Add support for english speaking clock
+    #define USE_I2S_RTTTL                          // Add support for Rtttl playback
+    #endif
 #endif
 
-// !!! Remember that your changes GOES AT THE BOTTOM OF THIS FILE right before the last #endif !!!
+// -- Options for firmware tasmota-client ------
+#ifdef FIRMWARE_TCLIENT
+    #undef CODE_IMAGE_STR
+    #define CODE_IMAGE_STR "custom-tclient"
+
+    // -- No IR options ----------------------------
+    #ifdef USE_IR_REMOTE
+        #undef USE_IR_REMOTE                        // Enable IR remote commands using library IRremoteESP8266
+    #endif
+    #ifdef USE_IR_REMOTE_FULL
+        #undef USE_IR_REMOTE_FULL                   // Support all IR protocols from IRremoteESP8266
+    #endif
+
+    #ifndef USE_TASMOTA_CLIENT
+        #define USE_TASMOTA_CLIENT    // Enable the driver
+    #endif
+    #ifndef USE_TASMOTA_CLIENT_FLASH_SPEED
+        #define USE_TASMOTA_CLIENT_FLASH_SPEED 57600    // Configure the baud rate of the bootloader
+    #endif
+    #ifndef USE_TASMOTA_CLIENT_SERIAL_SPEED 57600  
+        #define USE_TASMOTA_CLIENT_SERIAL_SPEED 57600    // Configure the baud rate at which the client microcontroller will be interfacing to Tasmota
+    #endif
+#endif
+
+// -- Options for firmware tasmota-radar and tasmota32-radar ------
+#ifdef FIRMWARE_RADAR
+    // This line will issue a warning during the build (yellow in 
+    // VSCode) so you see which section is used
+    #warning **** Build: RADAR ****
+    // -- CODE_IMAGE_STR is the name shown between brackets on the 
+    //    Information page or in INFO MQTT messages
+    #undef CODE_IMAGE_STR
+    #define CODE_IMAGE_STR "custom-radar"
+
+    // Put here your override for firmware tasmota-radar and tasmota32-radar
+    // -- No IR options ----------------------------
+    #ifdef USE_IR_REMOTE
+      #undef USE_IR_REMOTE                        // Enable IR remote commands using library IRremoteESP8266
+    #endif
+    #ifdef USE_IR_REMOTE_FULL
+      #undef USE_IR_REMOTE_FULL                   // Support all IR protocols from IRremoteESP8266
+    #endif
+    // -- Add Radar LD2410 ---
+    #ifndef USE_LD2410
+      #define USE_LD2410
+    #endif
+#endif
+
+// -- Options for firmware tasmota-energy-monitor and tasmota32-energy-monitor ------
+#ifdef FIRMWARE_ENERGY
+    // This line will issue a warning during the build (yellow in 
+    // VSCode) so you see which section is used
+    #warning **** Build: ENERGY ****
+    // -- CODE_IMAGE_STR is the name shown between brackets on the 
+    //    Information page or in INFO MQTT messages
+    #undef CODE_IMAGE_STR
+    #define CODE_IMAGE_STR "custom-energy-monitor"
+
+    // Put here your override for firmware tasmota-energy-monitor and tasmota32-energy-monitor
+    // -- No IR options ----------------------------
+    #ifdef USE_IR_REMOTE
+      #undef USE_IR_REMOTE                        // Enable IR remote commands using library IRremoteESP8266
+    #endif
+    #ifdef USE_IR_REMOTE_FULL
+      #undef USE_IR_REMOTE_FULL                   // Support all IR protocols from IRremoteESP8266
+    #endif
+    // -- Add Energy Monitoring ---
+    #ifndef USE_ENERGY_SENSOR
+        #define USE_ENERGY_SENSOR                        // Add energy sensors (-14k code)
+        #define USE_PZEM004T                             // Add support for PZEM004T Energy monitor (+2k code)
+        #define USE_PZEM_AC                              // Add support for PZEM014,016 Energy monitor (+1k1 code)
+        #define USE_PZEM_DC                              // Add support for PZEM003,017 Energy monitor (+1k1 code)
+        #define USE_CSE7766
+        #undef USE_MCP39F501                            // Add support for MCP39F501 Energy monitor as used in Shelly 2 (+3k1 code)
+        #undef USE_SDM72                                // Add support for Eastron SDM72-Modbus energy monitor (+0k3 code)
+        #undef USE_SDM120                               // Add support for Eastron SDM120-Modbus energy monitor (+1k1 code)
+        #undef USE_SDM230                               // Add support for Eastron SDM230-Modbus energy monitor (+?? code)
+        #undef USE_SDM630                               // Add support for Eastron SDM630-Modbus energy monitor (+0k6 code)
+        #undef USE_DDS2382                              // Add support for Hiking DDS2382 Modbus energy monitor (+0k6 code)
+        #undef USE_DDSU666                              // Add support for Chint DDSU666 Modbus energy monitor (+0k6 code)
+        //#define USE_SOLAX_X1                             // Add support for Solax X1 series Modbus log info (+3k1 code)
+        //#define USE_LE01MR                               // Add support for F&F LE-01MR modbus energy meter (+2k code)
+        //#define USE_TELEINFO                             // Add support for French Energy Provider metering telemetry (+5k2 code, +168 RAM + SmartMeter LinkedList Values RAM)
+        //#define USE_WE517                                // Add support for Orno WE517-Modbus energy monitor (+1k code)
+        //#define USE_MODBUS_ENERGY                        // Add support for generic modbus energy monitor using a user file in rule space (+5k)
+    #endif
+
+#endif
 
 #endif  // _USER_CONFIG_OVERRIDE_H_
