@@ -86,18 +86,18 @@
     // Put here your override for firmware tasmota-foo
     // -- No IR options ----------------------------
     #ifdef USE_IR_REMOTE
-      #undef USE_IR_REMOTE                        // Enable IR remote commands using library IRremoteESP8266
+      #undef USE_IR_REMOTE                          // Enable IR remote commands using library IRremoteESP8266
     #endif
     #ifdef USE_IR_REMOTE_FULL
-      #undef USE_IR_REMOTE_FULL                   // Support all IR protocols from IRremoteESP8266
+      #undef USE_IR_REMOTE_FULL                     // Support all IR protocols from IRremoteESP8266
     #endif
     // -- Add Wiegand ---
-    #ifndef USE_WIEGAND                           // Add support for 24/26/32/34 bit RFID Wiegand interface (D0/D1) (+1k7 code)
+    #ifndef USE_WIEGAND                             // Add support for 24/26/32/34 bit RFID Wiegand interface (D0/D1) (+1k7 code)
       #define USE_WIEGAND
     #endif
 #endif
 
-// -- Options for firmware tasmota-bar ------
+// -- Options for firmware tasmota-smartmeter and tasmota32-smartmeter ------
 #ifdef FIRMWARE_SMARTMETER
     #warning **** Build: SMARTMETER ****
     #undef CODE_IMAGE_STR
@@ -126,7 +126,7 @@
     #ifdef ESP32
       #warning *** Build this setup for tasmota32 ONLY ***
       // Add support for ethernet (Currently fixed for Olimex ESP32-PoE)
-      #define USE_ETHERNET                             // Add support for ethernet (Currently fixed for Olimex ESP32-PoE)
+      #define USE_ETHERNET                           // Add support for ethernet (Currently fixed for Olimex ESP32-PoE)
       #define ETH_TYPE          0                    // [EthType] 0 = ETH_PHY_LAN8720, 1 = ETH_PHY_TLK110, 2 = ETH_PHY_IP101
       #define ETH_ADDR          0                    // [EthAddress] 0 = PHY0 .. 31 = PHY31
       #define ETH_CLKMODE       3                    // [EthClockMode] 0 = ETH_CLOCK_GPIO0_IN, 1 = ETH_CLOCK_GPIO0_OUT, 2 = ETH_CLOCK_GPIO16_OUT, 3 = ETH_CLOCK_GPIO17_OUT
@@ -153,8 +153,8 @@
     // #define USE_I2S_NO_DAC                         // Add support for transistor-based output without DAC
     // #define USE_I2S_LSB                            // Add support for LSBJ chips, e.g. TM8211/PT8211
     // #define USE_I2S_WEBRADIO                       // Add support for MP3 web radio streaming (only on ESP32 with PSRAM)
-    #define USE_I2S_SAY_TIME                       // Add support for english speaking clock
-    #define USE_I2S_RTTTL                          // Add support for Rtttl playback
+    #define USE_I2S_SAY_TIME                          // Add support for english speaking clock
+    #define USE_I2S_RTTTL                             // Add support for Rtttl playback
     #endif
 #endif
 
@@ -226,24 +226,62 @@
     #endif
     // -- Add Energy Monitoring ---
     #ifndef USE_ENERGY_SENSOR
-        #define USE_ENERGY_SENSOR                        // Add energy sensors (-14k code)
-        #define USE_PZEM004T                             // Add support for PZEM004T Energy monitor (+2k code)
-        #define USE_PZEM_AC                              // Add support for PZEM014,016 Energy monitor (+1k1 code)
-        #define USE_PZEM_DC                              // Add support for PZEM003,017 Energy monitor (+1k1 code)
-        #define USE_CSE7766
-        #undef USE_MCP39F501                            // Add support for MCP39F501 Energy monitor as used in Shelly 2 (+3k1 code)
-        #undef USE_SDM72                                // Add support for Eastron SDM72-Modbus energy monitor (+0k3 code)
-        #undef USE_SDM120                               // Add support for Eastron SDM120-Modbus energy monitor (+1k1 code)
-        #undef USE_SDM230                               // Add support for Eastron SDM230-Modbus energy monitor (+?? code)
-        #undef USE_SDM630                               // Add support for Eastron SDM630-Modbus energy monitor (+0k6 code)
-        #undef USE_DDS2382                              // Add support for Hiking DDS2382 Modbus energy monitor (+0k6 code)
-        #undef USE_DDSU666                              // Add support for Chint DDSU666 Modbus energy monitor (+0k6 code)
-        //#define USE_SOLAX_X1                             // Add support for Solax X1 series Modbus log info (+3k1 code)
-        //#define USE_LE01MR                               // Add support for F&F LE-01MR modbus energy meter (+2k code)
-        //#define USE_TELEINFO                             // Add support for French Energy Provider metering telemetry (+5k2 code, +168 RAM + SmartMeter LinkedList Values RAM)
-        //#define USE_WE517                                // Add support for Orno WE517-Modbus energy monitor (+1k code)
-        //#define USE_MODBUS_ENERGY                        // Add support for generic modbus energy monitor using a user file in rule space (+5k)
+        #define USE_ENERGY_SENSOR                 // Add energy sensors (-14k code)
+        #define USE_PZEM004T                      // Add support for PZEM004T Energy monitor (+2k code)
+        #define USE_PZEM_AC                       // Add support for PZEM014,016 Energy monitor (+1k1 code)
+        #define USE_PZEM_DC                       // Add support for PZEM003,017 Energy monitor (+1k1 code)
+        #define USE_CSE7766                       // This is suppose to add support for HLW8032 Energy monitor (+ code)
+        #undef USE_MCP39F501                      // Add support for MCP39F501 Energy monitor as used in Shelly 2 (+3k1 code)
+        #undef USE_SDM72                          // Add support for Eastron SDM72-Modbus energy monitor (+0k3 code)
+        #undef USE_SDM120                         // Add support for Eastron SDM120-Modbus energy monitor (+1k1 code)
+        #undef USE_SDM230                         // Add support for Eastron SDM230-Modbus energy monitor (+?? code)
+        #undef USE_SDM630                         // Add support for Eastron SDM630-Modbus energy monitor (+0k6 code)
+        #undef USE_DDS2382                        // Add support for Hiking DDS2382 Modbus energy monitor (+0k6 code)
+        #undef USE_DDSU666                        // Add support for Chint DDSU666 Modbus energy monitor (+0k6 code)
+        //#define USE_SOLAX_X1                    // Add support for Solax X1 series Modbus log info (+3k1 code)
+        //#define USE_LE01MR                      // Add support for F&F LE-01MR modbus energy meter (+2k code)
+        //#define USE_TELEINFO                    // Add support for French Energy Provider metering telemetry (+5k2 code, +168 RAM + SmartMeter LinkedList Values RAM)
+        //#define USE_WE517                       // Add support for Orno WE517-Modbus energy monitor (+1k code)
+        //#define USE_MODBUS_ENERGY               // Add support for generic modbus energy monitor using a user file in rule space (+5k)
     #endif
+
+#endif
+
+// -- Options for firmware tasmota-KC868-A16 ------
+#ifdef FIRMWARE_KC868A16
+    #warning **** Build: KICONY_KC868A16 ****
+    #undef CODE_IMAGE_STR
+    #define CODE_IMAGE_STR "custom-kc868-a16"
+
+    // **********************************************************************
+    // Is it possible that the following causes problems with SetOption114?
+    // Comment out and coomplile for testing - Sunday 13th April 2025
+    // **********************************************************************
+    /*
+    #ifdef USE_HOME_ASSISTANT
+       #undef USE_HOME_ASSISTANT
+    #endif
+
+    #ifdef USE_TASMOTA_DISCOVERY
+       #undef USE_TASMOTA_DISCOVERY
+    #endif
+    */
+    // **********************************************************************
+
+    #ifndef USE_I2C
+      #define USE_I2C                             // I2C using library wire (+10k code, 0k2 mem, 124 iram)
+    #endif
+
+    #define USE_PCF8574                           // [I2cDriver2] Enable PCF8574 I/O Expander (I2C addresses 0x20 - 0x26 and 0x39 - 0x3F) (+1k9 code)
+      #define USE_PCF8574_MODE2
+      #define USE_PCF8574_SENSOR                  // enable PCF8574 inputs and outputs in SENSOR message
+      #define USE_PCF8574_DISPLAYINPUT            // enable PCF8574 inputs display in Web page
+      #define USE_PCF8574_MQTTINPUT               // enable MQTT message & rule process on input change detection : stat/%topic%/PCF8574_INP = {"Time":"2021-03-07T16:19:23+01:00","PCF8574-1_INP":{"D1":1}}
+
+    #define USE_ETHERNET                          // Add support for ethernet (Currently fixed for Olimex ESP32-PoE)
+      #define ETH_TYPE          0                 // [EthType] 0 = ETH_PHY_LAN8720, 1 = ETH_PHY_TLK110, 2 = ETH_PHY_IP101
+      #define ETH_ADDR          0                 // [EthAddress] 0 = PHY0 .. 31 = PHY31
+      #define ETH_CLKMODE       3                 // [EthClockMode] 0 = ETH_CLOCK_GPIO0_IN, 1 = ETH_CLOCK_GPIO0_OUT, 2 = ETH_CLOCK_GPIO16_OUT, 3 = ETH_CLOCK_GPIO17_OUT
 
 #endif
 
