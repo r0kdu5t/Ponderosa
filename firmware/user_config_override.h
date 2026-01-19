@@ -103,6 +103,11 @@
     #undef CODE_IMAGE_STR
     #define CODE_IMAGE_STR "custom-smartmeter"
 
+    #ifndef USE_ENERGY_SENSOR
+        #define USE_ENERGY_SENSOR                 // Add energy sensors (-14k code)
+        //
+    #endif
+
     // Put here your override for firmware custom-smartmeter
     // Added the following as I only have a pulse led meter.
     //#define NO_USE_SML_SPECOPT
