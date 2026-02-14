@@ -290,4 +290,37 @@
 
 #endif
 
+// -- Options for firmware tasmota-ds-temp-ir ------
+#ifdef IRMWARE_DSTEMPIR
+    // This line will issue a warning during the build (yellow in 
+    // VSCode) so you see which section is used
+    #warning **** Build: DSTEMPIR ****
+    // -- CODE_IMAGE_STR is the name shown between brackets on the 
+    //    Information page or in INFO MQTT messages
+    #undef CODE_IMAGE_STR
+    #define CODE_IMAGE_STR "custom-ds-temp-ir"
+
+    // Put here your override for firmware tasmota-ds-temp-ir
+    // -- No IR options ----------------------------
+    #ifndef USE_IR_REMOTE
+      #define USE_IR_REMOTE                         // Enable IR remote commands using library IRremoteESP8266
+    #endif
+    #ifndef USE_IR_REMOTE_FULL
+      #define USE_IR_REMOTE_FULL                    // Support all IR protocols from IRremoteESP8266
+    #endif
+    // -- Add DS18X20 ---
+    #ifndef USE_DS18x20
+      #define USE_DS18x20                           // Add support for DS18x20 sensors with id sort, single scan and read retry (+2k6 code)
+    //  #define W1_PARASITE_POWER                     // Optimize for parasite powered sensors
+      #define DS18x20_USE_ID_AS_NAME                // Use last 3 bytes for naming of sensors
+      #define DS18x20_USE_ID_ALIAS
+        /* 
+         * Use alias for fixed sensor name in scripts by autoexec. Command: DS18Alias XXXXXXXXXXXXXXXX,N where XXXXXXXXXXXXXXXX full serial and N number 1-255
+         * Result in JSON:  "DS18Sens_2":{"Id":"000003287CD8","Temperature":26.3} (example with N=2)
+         * Setting N to an alphanumeric value, the complete name is replaced with it
+         * Result in JSON:  "Outside1":{"Id":"000003287CD8","Temperature":26.3} (example with N=Outside1)
+        */
+    #endif
+#endif
+
 #endif  // _USER_CONFIG_OVERRIDE_H_
