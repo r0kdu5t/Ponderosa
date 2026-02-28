@@ -291,14 +291,14 @@
 #endif
 
 // -- Options for firmware tasmota-ds-temp-ir ------
-#ifdef FIRMWARE_DSIRDEVICE
+#ifdef FIRMWARE_VOLUMIOCTLR
     // This line will issue a warning during the build (yellow in 
     // VSCode) so you see which section is used
-    #warning **** Build: DSTEMPIR ****
+    #warning **** Build: VOLUMIOCTLR ****
     // -- CODE_IMAGE_STR is the name shown between brackets on the 
     //    Information page or in INFO MQTT messages
     #undef CODE_IMAGE_STR
-    #define CODE_IMAGE_STR "custom-dsirdevice"
+    #define CODE_IMAGE_STR "custom-volumioctlr"
 
     // Put here your override for firmware tasmota-ds-temp-ir
     // -- No IR options ----------------------------
