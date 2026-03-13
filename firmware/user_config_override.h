@@ -312,7 +312,13 @@
     #ifndef USE_DS18x20
       #define USE_DS18x20                           // Add support for DS18x20 sensors with id sort, single scan and read retry (+2k6 code)
     //  #define W1_PARASITE_POWER                     // Optimize for parasite powered sensors
-      #define DS18x20_USE_ID_AS_NAME                // Use last 3 bytes for naming of sensors
+
+    //  DS18Alias with alphanumeric alias does not work #20139
+    //  Cannot use this and DS18x20_USE_ID_ALIAS concurrently - Testing.
+      #ifdef DS18x20_USE_ID_AS_NAME
+        //#define DS18x20_USE_ID_AS_NAME                // Use last 3 bytes for naming of sensors
+        #undef DS18x20_USE_ID_AS_NAME
+      #endif
       #define DS18x20_USE_ID_ALIAS
         /* 
          * Use alias for fixed sensor name in scripts by autoexec. Command: DS18Alias XXXXXXXXXXXXXXXX,N where XXXXXXXXXXXXXXXX full serial and N number 1-255
