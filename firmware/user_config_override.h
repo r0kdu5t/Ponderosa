@@ -70,6 +70,13 @@
 #undef USE_SHELLY_DIMMER                         // Disable support for Shelly Dimmer (+3k code)
 #undef USE_ENERGY_SENSOR                         // Disable energy sensors (-14k code)
 
+// ----- To see the values of used Var<x> and Mem<x> at the WebUI ------
+// ===== Added on or about - Sunday 21st June 2026 for testing?!
+#warning **** Build: VIEW RULE MEMS AND VARS ****
+#ifndef USE_VIEW_RULE_MEMS_AND_VARS
+  #define USE_VIEW_RULE_MEMS_AND_VARS
+#endif
+
 // ***********************************************
 // ** Firmware specific settings *****************
 
@@ -301,7 +308,7 @@
     #define CODE_IMAGE_STR "custom-volumioctlr"
 
     // Put here your override for firmware tasmota-volumioctlr
-    // -- No IR options ----------------------------
+    // -- All IR options ----------------------------
     #ifndef USE_IR_REMOTE
       #define USE_IR_REMOTE                         // Enable IR remote commands using library IRremoteESP8266
     #endif
