@@ -26,6 +26,12 @@
 // ***********************************************
 // ** Global settings for all binaries ***********
 
+// Attempt to identify locally compiled firmware with only small changes.
+#ifdef CODE_IMAGE_STR
+  #undef CODE_IMAGE_STR
+#endif
+#define CODE_IMAGE_STR "custom-tuckers"
+
 // -- Setup your own Wifi settings  ---------------
 #ifdef WIFI_SCAN_AT_RESTART
   #undef WIFI_SCAN_AT_RESTART
