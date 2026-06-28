@@ -76,42 +76,44 @@
 #undef USE_SHELLY_DIMMER                         // Disable support for Shelly Dimmer (+3k code)
 #undef USE_ENERGY_SENSOR                         // Disable energy sensors (-14k code)
 
-// ===== Added on or about - Sunday 21st June 2026 for testing?!
-// ----- Ensure we're building with rules ------
-#ifndef USE_RULES
-  #define USE_RULES
-#endif
-// ----- To see the values of used Var<x> and Mem<x> at the WebUI ------
-//
-#warning **** Build: VIEW RULE MEMS AND VARS ****
-#ifndef USE_VIEW_RULE_MEMS_AND_VARS
-  #define USE_VIEW_RULE_MEMS_AND_VARS
-#endif
 
-// TESTING TESTING
-// ===== Added on or about - Sunday 21st June 2026
-// -- Add DS18X20 ---
-#ifndef USE_DS18x20
-  #define USE_DS18x20                           // Add support for DS18x20 sensors with id sort, single scan and read retry (+2k6 code)
-  #warning **** Build: USE_DS18x20 ****
-//  #define W1_PARASITE_POWER                     // Optimize for parasite powered sensors
-#endif
+// // ===== Added on or about - Sunday 21st June 2026 for testing?!
+// // ----- Ensure we're building with rules ------
+// #ifndef USE_RULES
+//   #define USE_RULES
+// #endif
+// // ----- To see the values of used Var<x> and Mem<x> at the WebUI ------
+// //
+// #warning **** Build: VIEW RULE MEMS AND VARS ****
+// #ifndef USE_VIEW_RULE_MEMS_AND_VARS
+//   #define USE_VIEW_RULE_MEMS_AND_VARS
+// #endif
 
-//  DS18Alias with alphanumeric alias does not work #20139
-//  Cannot use this and DS18x20_USE_ID_ALIAS concurrently - Testing.
+// // TESTING TESTING
+// // ===== Added on or about - Sunday 21st June 2026
+// // -- Add DS18X20 ---
+// #ifndef USE_DS18x20
+//   #define USE_DS18x20                           // Add support for DS18x20 sensors with id sort, single scan and read retry (+2k6 code)
+//   #warning **** Build: USE_DS18x20 ****
+// //  #define W1_PARASITE_POWER                     // Optimize for parasite powered sensors
+// #endif
 
-#ifdef DS18x20_USE_ID_AS_NAME
-  //#define DS18x20_USE_ID_AS_NAME                // Use last 3 bytes for naming of sensors
-  #undef DS18x20_USE_ID_AS_NAME
-#endif
-//
-#define DS18x20_USE_ID_ALIAS
-    /* 
-      * Use alias for fixed sensor name in scripts by autoexec. Command: DS18Alias XXXXXXXXXXXXXXXX,N where XXXXXXXXXXXXXXXX full serial and N number 1-255
-      * Result in JSON:  "DS18Sens_2":{"Id":"000003287CD8","Temperature":26.3} (example with N=2)
-      * Setting N to an alphanumeric value, the complete name is replaced with it
-      * Result in JSON:  "Outside1":{"Id":"000003287CD8","Temperature":26.3} (example with N=Outside1)
-    */
+// //  DS18Alias with alphanumeric alias does not work #20139
+// //  Cannot use this and DS18x20_USE_ID_ALIAS concurrently - Testing.
+
+// #ifdef DS18x20_USE_ID_AS_NAME
+//   //#define DS18x20_USE_ID_AS_NAME                // Use last 3 bytes for naming of sensors
+//   #undef DS18x20_USE_ID_AS_NAME
+// #endif
+// //
+// #define DS18x20_USE_ID_ALIAS
+//     /* 
+//       * Use alias for fixed sensor name in scripts by autoexec. Command: DS18Alias XXXXXXXXXXXXXXXX,N where XXXXXXXXXXXXXXXX full serial and N number 1-255
+//       * Result in JSON:  "DS18Sens_2":{"Id":"000003287CD8","Temperature":26.3} (example with N=2)
+//       * Setting N to an alphanumeric value, the complete name is replaced with it
+//       * Result in JSON:  "Outside1":{"Id":"000003287CD8","Temperature":26.3} (example with N=Outside1)
+//     */
+
 
 // ***********************************************
 // ** Firmware specific settings *****************
