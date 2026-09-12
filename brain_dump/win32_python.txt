@@ -1,0 +1,40 @@
+#
+# Refer: https://www.reddit.com/r/learnpython/comments/14zo7zq/creating_an_excellike_gui_in_python/
+#
+import win32com.client as win32
+
+Access the open Excel application
+xl = win32.GetActiveObject("Excel.Application")
+
+Access the workbook by name
+workbook = xl.Workbooks("123.xls")
+
+Access the specific worksheet by name
+worksheet = workbook.Worksheets("abc")
+
+Add data to cell A25
+worksheet.Range("A25").Value = "xyz"
+
+Save the workbook
+workbook.Save()
+
+Close the workbook
+workbook.Close()
+
+Re-open the workbook
+workbook = xl.Workbooks.Open("C:\Users\<username>\Desktop\123.xls")
+
+Access the worksheet again
+worksheet = workbook.Worksheets("abc")
+
+Retrieve the data from cell A25
+data = worksheet.Range("A25").Value
+
+Close the workbook
+workbook.Close()
+
+Quit the Excel application
+xl.Quit()
+
+Print the retrieved data
+print("Retrieved data:", data)
