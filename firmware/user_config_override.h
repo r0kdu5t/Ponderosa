@@ -378,4 +378,36 @@
         */
 #endif
 
+// -- Options for firmware tasmota-display-mqtt-events ------
+#ifdef FIRMWARE_DISPLAYMQTTEVENT
+    // This line will issue a warning during the build (yellow in 
+    // VSCode) so you see which section is used
+    #warning **** Build: DISPLAYMQTTEVENT ****
+    // -- CODE_IMAGE_STR is the name shown between brackets on the 
+    //    Information page or in INFO MQTT messages
+    #undef CODE_IMAGE_STR
+    #define CODE_IMAGE_STR "custom-display-mqtt-events"
+
+    // Put here your override for firmware tasmota-display-mqtt-events
+    #ifdef USE_SPI
+      #undef USE_SPI
+    #endif
+
+    #ifndef USE_I2C
+      #define USE_I2C                             // I2C using library wire (+10k code, 0k2 mem, 124 iram)
+    #endif
+
+    #ifndef USE_DISPLAY
+      #define USE_DISPLAY                           // Add I2C Display Support (+2k code)
+    #endif
+    //#define USE_DISPLAY_SSD1306                   // deprecated in favour of the following line.
+    #define USE_UNIVERSAL_DISPLAY                   // Requires tasmota/displaydesc/SSD1306_128x64_display.ini
+    #define SHOW_SPLASH                             // Research, review and uncomment see also SetOption135
+
+    #ifndef SUPPORT_MQTT_EVENT                      // a compilation flag used to enable generic MQTT subscription and unsubscription capabilities
+      #define SUPPORT_MQTT_EVENT
+    #endif
+
+#endif
+
 #endif  // _USER_CONFIG_OVERRIDE_H_
