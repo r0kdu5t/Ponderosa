@@ -410,4 +410,42 @@
 
 #endif
 
+// -- Options for firmware tasmota-waveshare-p4-eth
+#ifdef FIRMWARE_WAVESHAREP4ETH
+
+    // =============================================================================
+    // ETHERNET PHY CONFIGURATION (IP101GRI via RMII)
+    // =============================================================================
+    #define USE_ETHERNET
+    #define ETH_TYPE          1       // 1 = IP101 (RMII PHY chip)
+    #define ETH_CLKMODE       3       // External crystal or customized clock configuration for P4
+    #define ETH_ADDRESS       1       // Typical PHY address for WaveShare IP101 implementations
+
+    // Standard ESP32-P4 Internal EMAC RMII Pin Lines
+    #define ETH_MDC_PIN       31      // Management Data Clock line
+    #define ETH_MDIO_PIN      52      // Management Data Input/Output line
+    #define ETH_RESET_PIN     51      // PHY Reset pin hardware control line
+
+    // =============================================================================
+    // I2S AUDIO & ES8311 CODEC CONFIGURATION
+    // =============================================================================
+    #define USE_I2S                   // Enable fundamental Tasmota I2S Engine
+    #define USE_I2S_AUDIO             // Enable multi-format media pipeline audio
+    #define USE_ES8311                // Compile the onboard ES8311 Codec Driver
+
+    // Shared Internal Control I2C Bus for Codec Communication
+    #define I2C_SDA           7       // Onboard I2C Data line
+    #define I2C_SCL           8       // Onboard I2C Clock line
+
+    // Onboard Audio Codec I2S Signal Routes (ESP32-P4 Matrix mappings)
+    #define I2S_MCLK_PIN      13      // Master Clock line
+    #define I2S_BCLK_PIN      14      // Bit Clock line
+    #define I2S_WS_PIN        15      // Word Select (LRCK) line
+    #define I2S_DOUT_PIN      16      // Serial Audio Data Output line (Playback)
+    #define I2S_DIN_PIN       17      // Serial Audio Data Input line (Microphone)
+
+#endif // _USER_CONFIG_OVERRIDE_H_
+
+#endif
+
 #endif  // _USER_CONFIG_OVERRIDE_H_

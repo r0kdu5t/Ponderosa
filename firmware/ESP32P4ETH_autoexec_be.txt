@@ -1,0 +1,99 @@
+To control the ES8311 volume and audio registers over the shared I2C interface, you can use the following customized Berry script.
+This script initializes the I2C bus on GPIO 7 (SDA) and GPIO 8 (SCL), wakes up the codec, sets up standard I2S routing,
+and provides explicit functions to adjust both play (DAC) and record (ADC) 
+
+volumes.autoexec.be Script for ES8311
+Create a file named autoexec.be via the Tasmota Manage File System page, paste the code below, and reboot the board.
+ ====>>>> SNIP FROM HERE <<<====
+class ES8311_Codec
+  static var ADDR = 0x18  # Standard ES8311 I2C 7-bit Address
+  var wire_bus
+
+  def init()
+    # Initialize I2C bus on GPIO 7 (SDA) and GPIO 8 (SCL)
+    self.wire_bus = wire(7, 8)
+    if !self.wire_bus
+      print("ES8311 Error: Failed to initialize I2C bus.")
+      return
+    end
+    
+    self.setup_codec()
+  end
+
+  # Internal helper to safely write to registers
+  def write_reg(reg, val)
+    if self.wire_bus
+      return self.wire_bus.write(self.ADDR, reg, val)
+    end
+    return false
+  end
+
+  # Hardware Wakeup and Audio Pipeline Initialization Sequence
+  def setup_codec()
+    print("ES8311: Initializing onboard audio codec...")
+    
+    self.write_reg(0x00, 0x80)  # Reset the codec registers
+    import time; time.delay(20) # Allow stabilization clock cycles
+    
+    self.write_reg(0x01, 0x30)  # Enable Master Clock (MCLK) and system clocks
+    self.write_reg(0x02, 0x00)  # Set Digital Routing mode (Standard I2S Philips Protocol)
+    
+    # Configure Sample Architecture (e.g., standard 16-bit word length)
+    self.write_reg(0x03, 0x10)  # ADC format: I2S, 16-bit
+    self.write_reg(0x04, 0x10)  # DAC format: I2S, 16-bit
+    
+    # Power and Bias Management
+    self.write_reg(0x0D, 0x02)  # Power up analog circuitry bias references
+    self.write_reg(0x14, 0x1A)  # Unmute DAC and energise analog power rails
+    self.write_reg(0x12, 0x00)  # Unmute internal digital audio path
+    
+    # Establish initial safe operational levels (approx 60% volume)
+    self.set_volume(60)
+    self.set_mic_gain(15)
+    print("ES8311: Initialization routine complete. Audio path is unmuted.")
+  end
+
+  # Sets the main DAC Output Volume (Speaker/Line Out)
+  # Accepts a clean percentage scale from 0 to 100
+  def set_volume(pct)
+    if pct < 0; pct = 0; end
+    if pct > 100; pct = 100; end
+    
+    # Map 0-100% to hardware attenuation register 0x14 (0xFF = Mute, 0x00 = Max Volume / 0dB)
+    # Hardware behaves inversely: 0 is loudest, 100 is quietest.
+    var reg_val = 100 - pct
+    
+    # Scale calculation to register thresholds (mapping 0-100 down to hardware constraints)
+    var target = (reg_val * 255) / 100
+    if target > 255; target = 255; end
+    
+    self.write_reg(0x14, target)
+    print(string.format("ES8311: Playback Volume configured to %d%% (Reg 0x14: 0x%02X)", pct, target))
+  end
+
+  # Sets the Microphone / Input Line Pre-amplifier Gain
+  # Accepts an arbitrary volume level scale from 0 to 30
+  def set_mic_gain(level)
+    if level < 0; level = 0; end
+    if level > 30; level = 30; end
+    
+    # Register 0x16 handles the ADC programmable gain amplifier (PGA)
+    self.write_reg(0x16, level)
+    print(string.format("ES8311: Recording Gain adjusted to level %d", level))
+  end
+
+  # Hardware Mute Function
+  def mute(state)
+    if state
+      self.write_reg(0x12, 0x20) # Enable digital mute flag
+      print("ES8311: Output muted.")
+    else
+      self.write_reg(0x12, 0x00) # Disable digital mute flag
+      print("ES8311: Output unmuted.")
+    end
+  end
+end
+
+# Instantiate the driver globally in the execution runtime
+global.es8311 = ES8311_Codec()
+
